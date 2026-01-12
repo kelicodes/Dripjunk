@@ -1,5 +1,26 @@
 /* =========================
-   COLLECTIONS SECTION
+   VARIABLES
+========================= */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #111111;
+  --primary-color: #000000;
+  --card-bg: #f4f4f4;
+  --card-border: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+  --bg-color: #111111;
+  --text-color: #ffffff;
+  --primary-color: #fff;
+  --card-bg: #1f1f1f;
+  --card-border: #333;
+  --shadow-color: rgba(0, 0, 0, 0.6);
+}
+
+/* =========================
+   COLLECTION SECTION
 ========================= */
 .collection {
   width: 100%;
@@ -16,10 +37,12 @@
   text-align: left;
   color: var(--text-color);
   padding-left: 0.5rem;
+  transition: color 0.3s;
 }
 
 .collection h3 span {
-  color: var(--primary-color, #000);
+  color: var(--primary-color);
+  transition: color 0.3s;
 }
 
 /* =========================
@@ -30,12 +53,14 @@
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: flex-start; /* left align cards */
+  box-sizing: border-box;
 }
 
-/* Individual card sizing like New Arrivals */
+/* Individual cards */
 .cards-container > * {
-  flex: 0 0 48%; /* 2 per row mobile */
+  flex: 0 0 48%; /* 2 per row on mobile */
   max-width: 48%;
+  box-sizing: border-box;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -44,7 +69,18 @@
   box-shadow: 0 6px 16px var(--shadow-color);
 }
 
-/* Responsive breakpoints */
+/* =========================
+   RESPONSIVE BREAKPOINTS
+========================= */
+/* Tiny phones fallback */
+@media (max-width: 359px) {
+  .cards-container > * {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* Tablets / medium screens */
 @media (min-width: 600px) {
   .cards-container > * {
     flex: 0 0 31%; /* 3 per row */
@@ -52,6 +88,7 @@
   }
 }
 
+/* Desktop */
 @media (min-width: 900px) {
   .cards-container > * {
     flex: 0 0 23%; /* 4 per row */
@@ -67,34 +104,8 @@
 }
 
 /* =========================
-   LOADING SPINNER
+   CARD STYLING
 ========================= */
-.collection .loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px; /* space for spinner */
-}
-
-/* =========================
-   DARK MODE SUPPORT
-========================= */
-[data-theme="dark"] .collection {
-  background: #1a1a1a;
-}
-
-[data-theme="dark"] .collection h3 {
-  color: #eee;
-}
-
-[data-theme="dark"] .collection h3 span {
-  color: #fff;
-}
-
-/* =========================
-   CARD SPECIFIC OVERRIDES
-========================= */
-/* Ensure card backgrounds and borders respect theme */
 .cards-container > * .mycard {
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
@@ -123,6 +134,7 @@
   object-fit: contain;
   object-position: center;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+  transition: filter 0.3s;
 }
 
 /* Card info */
@@ -142,6 +154,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: color 0.3s;
 }
 
 /* Prices */
@@ -181,7 +194,7 @@
   border-radius: 4px;
   background: var(--text-color);
   color: var(--bg-color);
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
   font-weight: 500;
 }
 
@@ -189,3 +202,48 @@
   opacity: 0.9;
 }
 
+/* =========================
+   LOADING SPINNER
+========================= */
+.collection .loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* =========================
+   DARK MODE SUPPORT
+========================= */
+[data-theme="dark"] .collection {
+  background: #1a1a1a;
+}
+
+[data-theme="dark"] .collection h3 {
+  color: #eee;
+}
+
+[data-theme="dark"] .collection h3 span {
+  color: #fff;
+}
+
+[data-theme="dark"] .cards-container > * .mycard {
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+}
+
+[data-theme="dark"] .cards-container > * .mycard .info p,
+[data-theme="dark"] .cards-container > * .mycard .new-price {
+  color: var(--text-color);
+}
+
+/* =========================
+   TRANSITIONS
+========================= */
+.collection h3,
+.cards-container > * .mycard,
+.cards-container > * .mycard .info p,
+.cards-container > * .mycard .new-price,
+.cards-container > * .mycard .button button {
+  transition: all 0.3s ease;
+}
