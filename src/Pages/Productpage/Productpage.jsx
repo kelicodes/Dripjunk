@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { ShopContext } from "../../Context/ShopContext.jsx";
 import Spinner from "../../Components/Slider/Slider.jsx";
-import "./ProductPage.css";
+import "./Productpage.css";
 
 const ProductPage = () => {
   const { id } = useParams();
