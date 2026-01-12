@@ -1,0 +1,141 @@
+/* =========================
+   SPINNER CONTAINER
+========================= */
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  min-height: 200px;
+  width: 100%;
+}
+
+/* =========================
+   SPINNER ANIMATION
+========================= */
+.spinner {
+  border-radius: 50%;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-top-color: #000;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Size variants */
+.spinner-small {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
+}
+
+.spinner-medium {
+  width: 40px;
+  height: 40px;
+  border-width: 4px;
+}
+
+.spinner-large {
+  width: 60px;
+  height: 60px;
+  border-width: 5px;
+}
+
+/* Spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================
+   SPINNER MESSAGE
+========================= */
+.spinner-message {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* =========================
+   RESPONSIVE ADJUSTMENTS
+========================= */
+@media (max-width: 767px) {
+  .spinner-container {
+    padding: 2rem 1rem;
+    min-height: 150px;
+  }
+
+  .spinner-message {
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .spinner-container {
+    padding: 4rem 2rem;
+    min-height: 250px;
+  }
+
+  .spinner-message {
+    font-size: 1rem;
+  }
+}
+
+/* =========================
+   DARK MODE SUPPORT
+========================= */
+[data-theme="dark"] .spinner {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: #fff;
+}
+
+[data-theme="dark"] .spinner-message {
+  color: #ccc;
+}
+
+/* =========================
+   FULLSCREEN SPINNER VARIANT
+========================= */
+.spinner-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-theme="dark"] .spinner-fullscreen {
+  background: rgba(17, 17, 17, 0.95);
+}
+
+/* =========================
+   INLINE SPINNER VARIANT
+========================= */
+.spinner-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  min-height: auto;
+}
+
+.spinner-inline .spinner {
+  margin: 0;
+}
+
+.spinner-inline .spinner-message {
+  margin: 0;
+  font-size: 0.875rem;
+}

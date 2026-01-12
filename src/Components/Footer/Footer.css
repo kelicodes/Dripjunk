@@ -1,0 +1,118 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #111111;
+  --card-bg: #f4f4f4;
+  --card-border: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  --footer-bg: #1a1a1a; /* lighter black for light mode */
+  --secondary-text: #bbb;
+}
+
+[data-theme="dark"] {
+  --bg-color: #111111;
+  --text-color: #ffffff;
+  --card-bg: #1f1f1f;
+  --card-border: #333333;
+  --shadow-color: rgba(0, 0, 0, 0.6);
+
+  --footer-bg: #111111; /* darker black for dark mode */
+  --secondary-text: #888;
+}
+
+.footer {
+  background-color: var(--footer-bg);
+  color: var(--text-color);
+  padding: 60px 20px 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.footer-top {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+/* Brand */
+.footer-brand h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: var(--text-color);
+}
+
+.footer-brand span {
+  font-weight: 300;
+  color: var(--text-color);
+}
+
+.footer-brand p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--secondary-text);
+}
+
+/* Links */
+.footer-links h4,
+.footer-socials h4 {
+  margin-bottom: 14px;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.footer-links a {
+  display: block;
+  text-decoration: none;
+  color: var(--secondary-text);
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.footer-links a:hover {
+  color: var(--text-color);
+}
+
+/* Socials */
+.footer-socials .icons {
+  display: flex;
+  gap: 14px;
+}
+
+.footer-socials a {
+  color: var(--secondary-text);
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.footer-socials a:hover {
+  color: var(--text-color);
+}
+
+/* Bottom */
+.footer-bottom {
+  border-top: 1px solid var(--card-border);
+  margin-top: 40px;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--secondary-text);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .footer-top {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-socials .icons {
+    justify-content: center;
+  }
+}

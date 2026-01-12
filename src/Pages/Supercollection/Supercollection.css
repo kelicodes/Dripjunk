@@ -1,0 +1,148 @@
+.supercollection {
+  width: 100%;
+  padding: 2rem 1rem;
+  background: var(--bg-color, #f9f9f9);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.supercollection .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.supercollection h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-color, #111);
+}
+
+.supercollection h3 span {
+  color: var(--primary-color, #ff4c60);
+}
+
+.toggle-filters {
+  background: var(--primary-color, #ff4c60);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.toggle-filters:hover {
+  background: #e04055;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  transition: max-height 0.3s ease;
+}
+
+.filters input,
+.filters select {
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  flex: 1;
+  min-width: 130px;
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: var(--primary-color, #ff4c60);
+  box-shadow: 0 2px 8px rgba(255, 76, 96, 0.3);
+}
+
+/* Cards Grid */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+/* Individual cards */
+.cards-container > * {
+  flex: 0 0 48%;
+  max-width: 48%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.cards-container > *:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive cards */
+@media (min-width: 600px) {
+  .cards-container > * {
+    flex: 0 0 31%;
+    max-width: 31%;
+  }
+}
+
+@media (min-width: 900px) {
+  .cards-container > * {
+    flex: 0 0 23%;
+    max-width: 23%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .cards-container > * {
+    flex: 0 0 18%;
+    max-width: 18%;
+  }
+}
+
+/* No Results */
+.no-results {
+  width: 100%;
+  text-align: center;
+  color: #888;
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+
+/* Dark Mode */
+[data-theme="dark"] .supercollection {
+  background: #1a1a1a;
+}
+
+[data-theme="dark"] .supercollection h3 {
+  color: #eee;
+}
+
+[data-theme="dark"] .toggle-filters {
+  background: #ff4c60;
+  color: #fff;
+}
+
+[data-theme="dark"] .filters input,
+[data-theme="dark"] .filters select {
+  background: #222;
+  color: #eee;
+  border-color: #444;
+}
+
+[data-theme="dark"] .cards-container > * {
+  background: #222;
+  border: 1px solid #333;
+}
+
+[data-theme="dark"] .no-results {
+  color: #ccc;
+}
