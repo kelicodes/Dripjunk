@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import Card from "../../Components/Card/Card.jsx";
 import { ShopContext } from "../../Context/ShopContext.jsx";
 import Spinner from "../../Components/Slider/Slider.jsx";
-import "./SuperCollection.css";
+import "./Supercollection.css";
 
 const SuperCollection = () => {
   const [theProducts, setTheProducts] = useState([]);
