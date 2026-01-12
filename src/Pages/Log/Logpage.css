@@ -1,76 +1,174 @@
-/* src/Components/AuthModal/AuthModal.css */
-.auth-modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
+/* =========================
+   VARIABLES
+========================= */
+:root {
+  --bg-color: #f7f7f7;
+  --text-color: #111111;
+  --input-bg: #ffffff;
+  --input-border: #ccc;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --primary-color: #0070f3;
+  --error-color: #e63946;
+  --toggle-color: #0070f3;
+  --button-bg: #0070f3;
+  --button-text: #fff;
+}
+
+[data-theme="dark"] {
+  --bg-color: #111111;
+  --text-color: #ffffff;
+  --input-bg: #1f1f1f;
+  --input-border: #333;
+  --shadow-color: rgba(0, 0, 0, 0.6);
+  --primary-color: #1e90ff;
+  --error-color: #ff6b6b;
+  --toggle-color: #1e90ff;
+  --button-bg: #1e90ff;
+  --button-text: #fff;
+}
+
+/* =========================
+   PAGE CONTAINER
+========================= */
+.login-page {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.auth-modal {
+  justify-content: center; /* horizontal center */
+  align-items: center;     /* vertical center */
+  min-height: 100vh;       /* full viewport height */
   background: var(--bg-color);
-  color: var(--text-color);
-  padding: 2rem;
-  border-radius: 10px;
-  width: 90%;
+  padding: 1rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* =========================
+   LOGIN CARD
+========================= */
+.login-container {
+  background: var(--input-bg);
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px var(--shadow-color);
+  width: 100%;
   max-width: 400px;
-  position: relative;
-  box-shadow: 0 4px 12px var(--shadow-color);
+  text-align: center;
+  transition: background 0.3s ease, color 0.3s ease;
+  animation: fadeInCenter 0.4s ease forwards;
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  font-size: 1.5rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+/* =========================
+   ANIMATION
+========================= */
+@keyframes fadeInCenter {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   HEADINGS
+========================= */
+.login-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
   color: var(--text-color);
 }
 
-.auth-modal form {
+/* =========================
+   FORM
+========================= */
+.login-container form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1rem;
 }
 
-.auth-modal input {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid var(--card-border);
-  background: var(--card-bg);
+/* INPUT FIELDS */
+.login-container input {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-container input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2);
+}
+
+/* =========================
+   BUTTON
+========================= */
+.login-container button {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, filter 0.2s ease;
+}
+
+.login-container button:hover {
+  filter: brightness(0.9);
+}
+
+.login-container button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* =========================
+   ERROR MESSAGE
+========================= */
+.error {
+  color: var(--error-color);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+/* =========================
+   TOGGLE LOGIN/REGISTER
+========================= */
+.toggle-text {
+  font-size: 0.9rem;
+  margin-top: 1rem;
   color: var(--text-color);
 }
 
-.auth-modal button {
-  padding: 12px;
-  border-radius: 6px;
-  border: none;
-  background: var(--text-color);
-  color: var(--bg-color);
+.toggle-text span {
+  color: var(--toggle-color);
   cursor: pointer;
   font-weight: 600;
+  transition: color 0.2s ease;
 }
 
-.auth-modal .toggle-text {
-  font-size: 0.9rem;
-  margin-top: 10px;
-  text-align: center;
+.toggle-text span:hover {
+  text-decoration: underline;
 }
 
-.auth-modal .toggle-text span {
-  cursor: pointer;
-  color: var(--primary-color, #ff9900);
-}
-
-.auth-modal .error {
-  color: red;
-  font-size: 0.85rem;
-  text-align: center;
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 500px) {
+  .login-container {
+    padding: 2rem 1.5rem;
+  }
+  .login-container h2 {
+    font-size: 1.5rem;
+  }
+  .login-container input,
+  .login-container button {
+    font-size: 0.95rem;
+  }
 }

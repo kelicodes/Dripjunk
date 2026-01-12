@@ -1,105 +1,112 @@
-import axios from "axios"
-import { createContext, useState } from "react"
-import { toast } from "react-toastify"
+// src/Context/ShopContext.jsx
+import axios from "axios";
+import { createContext, useState, useContext } from "react";
+import { toast } from "react-toastify";
+import { AuthContext } from "./Authcontex"
+ import { useNavigate } from "react-router-dom";
 
-export const ShopContext = createContext()
+
+export const ShopContext = createContext();
 
 export const ShopContextProvider = ({ children }) => {
-  const [cartdata, setCartdata] = useState([])
-  const [products, setProducts] = useState([])
+  const [cartdata, setCartdata] = useState([]);
+  const [products, setProducts] = useState([]);
 
-  const BASE_URL = "https://dripg.onrender.com"
+  const { triggerAuthModal,setPendingAction } = useContext(AuthContext);
 
+  const BASE_URL = "https://dripg.onrender.com";
+
+  // 🛍 Fetch all products
   const fecthProducts = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/product/fetchall`)
+      const res = await axios.get(`${BASE_URL}/product/fetchall`);
       if (res.data.success) {
-        setProducts(res.data.products)
+        setProducts(res.data.products);
       }
     } catch (error) {
-      console.log(error)
+      console.error("Fetch products error:", error);
     }
-  }
+  };
 
- const addtocart = async ({ productId, quantity = 1 }) => {
+const addtocart = async ({ productId, quantity = 1 }) => {
   try {
-    const res = await axios.post(`${BASE_URL}/cart/addtocart`, {
-      productId,
-      quantity, // fixed typo from quantinty -> quantity
-    });
+    const res = await axios.post(
+      `${BASE_URL}/cart/addtocart`,
+      { productId, quantity },
+      { withCredentials: true }
+    );
 
     if (res.data.success) {
       toast.success(res.data.message);
-      getCart(); // assuming this refreshes cart
-      return true; // indicate success
-    } else {
-      toast.error(res.data.message || "Failed to add item to cart");
+      getCart();
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    if (error.response?.status === 401) {
+      // 🔥 User not logged in: redirect to login page
+      toast.info("Please login to continue");
       return false;
     }
-  } catch (error) {
-    // Better logging
-    if (error.response) {
-      // Server responded with a status code outside 2xx
-      console.error("Axios response error:", {
-        status: error.response.status,
-        data: error.response.data,
-      });
-      toast.error(error.response.data.message || "Server error");
-    } else if (error.request) {
-      // Request was made but no response received
-      console.error("Axios request error:", error.request);
-      toast.error("No response from server. Check your connection.");
-    } else {
-      // Something else happened
-      console.error("Error in addtocart:", error.message);
-      toast.error("Error adding to cart: " + error.message);
-    }
+
+    toast.error("Something went wrong");
+    console.error(error);
     return false;
   }
 };
-
-
+  // 🛒 Get cart
   const getCart = async () => {
-    const res = await axios.get(`${BASE_URL}/cart/me`)
+    try {
+      const res = await axios.get(`${BASE_URL}/cart/me`, {
+        withCredentials: true,
+      });
 
-    if (!res.data.cart?.items) {
-      setCartdata([])
-      return
+      if (!res.data.cart?.items) {
+        setCartdata([]);
+        return;
+      }
+
+      setCartdata(res.data.cart.items);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        setCartdata([]);
+      } else {
+        console.error("Get cart error:", error);
+      }
     }
+  };
 
-    const items = await Promise.all(
-      res.data.cart.items.map(async (item) => {
-        return item
-      })
-    )
-
-    setCartdata(items)
-  }
-
+  // ➖ Remove from cart
   const removefromcart = async (productId) => {
     try {
-      const res = await axios.post(`${BASE_URL}/cart/remove`, { productId })
+      const res = await axios.post(
+        `${BASE_URL}/cart/remove`,
+        { productId },
+        { withCredentials: true }
+      );
+
       if (res.data.success) {
-        getCart()
+        getCart();
       }
     } catch (error) {
-      console.log(error)
+      console.error("Remove cart error:", error);
     }
-  }
+  };
 
   return (
     <ShopContext.Provider
       value={{
+        products,
+        cartdata,
+        fecthProducts,
         addtocart,
         removefromcart,
         getCart,
         BASE_URL,
-        cartdata,
-        fecthProducts,
-        products,
       }}
     >
       {children}
     </ShopContext.Provider>
-  )
-}
+  );
+};

@@ -1,34 +1,64 @@
-// src/Context/AuthContext.jsx
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 export const AuthContext = createContext();
 
+const BASE_URL = "https://dripg.onrender.com";
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
 
-  // Fetch user on app load
+  // 🔐 Fetch user once on app load
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("/user/me", { withCredentials: true });
-        if (res.data.success && res.data.user) {
+        const res = await axios.get(
+          `${BASE_URL}/user/me`,
+          { withCredentials: true }
+        );
+
+        if (res.data?.success) {
           setUser(res.data.user);
         }
-      } catch (err) {
+      } catch {
+        // ❗ DO NOT close modal here
         setUser(null);
       }
     };
+
     fetchUser();
   }, []);
 
-  const triggerAuthModal = () => setShowAuthModal(true);
-  const closeAuthModal = () => setShowAuthModal(false);
+  const triggerAuthModal = (action = null) => {
+    setPendingAction(() => action);
+    setShowAuthModal(true);
+  };
+
+  const handleLoginSuccess = async () => {
+    if (pendingAction) {
+      await pendingAction();
+      setPendingAction(null);
+    }
+    setShowAuthModal(false); // ✅ close ONLY after success
+  };
+
+  const closeAuthModal = () => {
+    setShowAuthModal(false);
+    setPendingAction(null);
+  };
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, showAuthModal, triggerAuthModal, closeAuthModal }}
+      value={{
+        user,
+        setUser,
+        showAuthModal,
+        triggerAuthModal,
+        handleLoginSuccess,
+        closeAuthModal,
+      }}
     >
       {children}
     </AuthContext.Provider>

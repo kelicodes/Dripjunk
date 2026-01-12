@@ -4,8 +4,10 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { ShopContextProvider } from './Context/ShopContext.jsx'
+import { AuthProvider } from './Context/Authcontex.jsx'
 
 createRoot(document.getElementById('root')).render(
+  <AuthProvider>
   <ShopContextProvider>
     <BrowserRouter>
   <StrictMode>
@@ -13,4 +15,5 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>
   </BrowserRouter>
   </ShopContextProvider>
+  </AuthProvider>
 )

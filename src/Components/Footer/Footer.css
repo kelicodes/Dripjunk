@@ -1,34 +1,30 @@
-/* ------------------- Variables ------------------- */
+/* =========================
+   FOOTER VARIABLES
+========================= */
 :root {
-  --bg-color: #ffffff;
-  --text-color: #111111;
-  --card-bg: #f4f4f4;
-  --card-border: #ddd;
-  --shadow-color: rgba(0, 0, 0, 0.1);
-
-  --footer-bg: #1a1a1a;
-  --secondary-text: #bbb;
+  --footer-bg: #ffffff;
+  --footer-text: #111111;
+  --footer-secondary: #bbb;
 }
 
 [data-theme="dark"] {
-  --bg-color: #111111;
-  --text-color: #ffffff;
-  --card-bg: #1f1f1f;
-  --card-border: #333;
-  --shadow-color: rgba(0, 0, 0, 0.6);
-
   --footer-bg: #111111;
-  --secondary-text: #888;
+  --footer-text: #ffffff;
+  --footer-secondary: #888;
 }
 
-/* ------------------- Footer ------------------- */
+/* =========================
+   FOOTER BASE
+========================= */
 .footer {
   background-color: var(--footer-bg);
-  color: var(--text-color);
+  color: var(--footer-text);
   padding: 60px 20px 20px;
   transition: background-color 0.3s, color 0.3s;
+  border-top: 1px solid var(--footer-text);
 }
 
+/* Grid layout */
 .footer-top {
   max-width: 1200px;
   margin: auto;
@@ -37,79 +33,65 @@
   gap: 40px;
 }
 
-/* ------------------- Brand ------------------- */
+/* =========================
+   BRAND
+========================= */
 .footer-brand h3,
 .footer-brand span,
 .footer-brand p {
-  margin-bottom: 12px;
-  color: var(--text-color);
+  color: var(--footer-text);
   transition: color 0.3s;
 }
 
 .footer-brand p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--secondary-text);
+  color: var(--footer-secondary);
 }
 
-/* ------------------- Links ------------------- */
+/* =========================
+   LINKS & SOCIALS
+========================= */
 .footer-links h4,
 .footer-socials h4 {
-  margin-bottom: 14px;
-  font-size: 16px;
-  color: var(--text-color);
+  color: var(--footer-text);
   transition: color 0.3s;
 }
 
-.footer-links a {
-  display: block;
-  text-decoration: none;
-  color: var(--secondary-text);
-  margin-bottom: 10px;
-  font-size: 14px;
-  transition: color 0.3s;
-}
-
-.footer-links a:hover {
-  color: var(--text-color);
-}
-
-/* ------------------- Socials ------------------- */
-.footer-socials .icons {
-  display: flex;
-  gap: 14px;
-}
-
+.footer-links a,
 .footer-socials a {
-  color: var(--secondary-text);
-  font-size: 18px;
+  color: var(--footer-secondary);
   transition: color 0.3s;
 }
 
+.footer-links a:hover,
 .footer-socials a:hover {
-  color: var(--text-color);
+  color: var(--footer-text);
 }
 
-/* ------------------- Bottom ------------------- */
+/* =========================
+   BOTTOM SECTION
+========================= */
 .footer-bottom {
-  border-top: 1px solid var(--card-border);
-  margin-top: 40px;
-  padding-top: 20px;
+  border-top: 1px solid var(--footer-secondary);
+  color: var(--footer-secondary);
   text-align: center;
   font-size: 13px;
-  color: var(--secondary-text);
+  margin-top: 40px;
+  padding-top: 20px;
   transition: color 0.3s, border-color 0.3s;
 }
 
-/* ------------------- Footer Headings Fix ------------------- */
-/* Force all h3/h4 inside footer to respect theme */
+/* =========================
+   FORCE FOOTER HEADINGS
+========================= */
 .footer h3,
 .footer h4 {
-  color: var(--text-color);
+  color: var(--footer-text) !important;
   transition: color 0.3s;
 }
 
-/* ------------------- Responsive ------------------- */
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 900px) {
   .footer-top {
     grid-template-columns: repeat(2, 1fr);

@@ -30,8 +30,12 @@ const ProductPage = () => {
 
   const handleAddToCart = async () => {
     setLoadingCart(true);
-    const success = await addtocart({ productId: product._id, quantity: 1 },{ withCredentials: true });
+    const success = await addtocart({ productId: product._id, quantity: 1 }, { withCredentials: true });
     setLoadingCart(false);
+
+    if(!success){
+      navigate("/login")
+    }
 
     if (success) {
       navigate("/cart");
@@ -40,7 +44,7 @@ const ProductPage = () => {
 
   const handleBuyNow = async () => {
     setLoadingCart(true);
-    const success = await addtocart({ productId: product._id, quantity: 1 },{ withCredentials: true });
+    const success = await addtocart({ productId: product._id, quantity: 1 }, { withCredentials: true });
     setLoadingCart(false);
 
     if (success) {
@@ -57,17 +61,14 @@ const ProductPage = () => {
       <div className="product-details">
         <div className="images-section">
           <div className="main-image">
-            <img
-              src={mainImage || "https://via.placeholder.com/400"}
-              alt={product.name}
-            />
+            <img src={mainImage || "https://via.placeholder.com/400"} alt={product.shoeName} />
           </div>
           <div className="thumbnail-images">
             {product.images?.map((img, idx) => (
               <img
                 key={idx}
                 src={img}
-                alt={`${product.name} ${idx + 1}`}
+                alt={`${product.shoeName} ${idx + 1}`}
                 onClick={() => setMainImage(img)}
                 className={mainImage === img ? "active-thumb" : ""}
               />
@@ -76,22 +77,29 @@ const ProductPage = () => {
         </div>
 
         <div className="product-info">
-          <h2>{product.name}</h2>
+          <h2>{product.shoeName}</h2>
+
           <div className="price">
             {product.discountPrice ? (
               <>
                 <span className="old-price">KES {product.price}</span>
-                <span className="new-price">
-                  KES {product.price - product.discountPrice}
-                </span>
+                <span className="new-price">KES {product.discountPrice}</span>
               </>
             ) : (
               <span className="new-price">KES {product.price}</span>
             )}
           </div>
-          <p className="description">
-            {product.description || "No description available."}
-          </p>
+
+          <p className="description">{product.desc || "No description available."}</p>
+
+          {/* Additional Product Details */}
+          <div className="additional-info">
+            <p><strong>Brand:</strong> {product.brand}</p>
+            <p><strong>Category:</strong> {product.category}</p>
+            <p><strong>Available Sizes:</strong> {product.shoeNumbers.join(", ")}</p>
+            <p><strong>Colors:</strong> {product.color.join(", ")}</p>
+            <p><strong>Availability:</strong> {product.isAvailable ? "In Stock" : "Out of Stock"}</p>
+          </div>
 
           <div className="actions">
             <button onClick={handleAddToCart} disabled={loadingCart}>

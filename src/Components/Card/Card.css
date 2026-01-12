@@ -18,8 +18,8 @@
 
 /* IMAGE CONTAINER - VERY SMALL */
 .mycard .img {
-  width: 45%;
-  height: 45px;
+  width: 65%;
+  height: 65px;
   margin: 0.6rem auto;
   overflow: hidden;
   display: flex;
