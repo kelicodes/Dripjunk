@@ -26,6 +26,15 @@
   --button-bg: #1e90ff;
   --button-text: #fff;
 }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =========================
+   GLOBAL RESET
 
 /* =========================
    PAGE CONTAINER
@@ -35,9 +44,11 @@
   justify-content: center; /* horizontal center */
   align-items: center;     /* vertical center */
   min-height: 100vh;       /* full viewport height */
+  width: 100%;
   background: var(--bg-color);
   padding: 1rem;
   transition: background 0.3s ease, color 0.3s ease;
+  overflow: auto; /* allows scrolling if screen is too small */
 }
 
 /* =========================
@@ -52,7 +63,7 @@
   max-width: 400px;
   text-align: center;
   transition: background 0.3s ease, color 0.3s ease;
-  animation: fadeInCenter 0.4s ease forwards;
+  animation: fadeInCenter 0.5s ease forwards;
 }
 
 /* =========================

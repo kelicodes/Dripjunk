@@ -12,7 +12,6 @@ const Home=()=>{
     const {products}=useContext(ShopContext)
     return <>
     <Hero/>
-    <Slider/>
      <Collections/> 
     <Newarrivals/>  
     </>

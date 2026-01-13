@@ -29,28 +29,38 @@ const ProductPage = () => {
   }, [product]);
 
   const handleAddToCart = async () => {
-    setLoadingCart(true);
-    const success = await addtocart({ productId: product._id, quantity: 1 }, { withCredentials: true });
-    setLoadingCart(false);
+  setLoadingCart(true);
+  const success = await addtocart({
+    productId: product._id,
+    quantity: 1,
+  });
+  setLoadingCart(false);
 
-    if(!success){
-      navigate("/login")
-    }
+  if (!success) {
+    navigate("/login"); // ✅ CORRECT PLACE
+    return;
+  }
 
-    if (success) {
-      navigate("/cart");
-    }
-  };
+  navigate("/cart");
+};
+
 
   const handleBuyNow = async () => {
-    setLoadingCart(true);
-    const success = await addtocart({ productId: product._id, quantity: 1 }, { withCredentials: true });
-    setLoadingCart(false);
+  setLoadingCart(true);
+  const success = await addtocart({
+    productId: product._id,
+    quantity: 1,
+  });
+  setLoadingCart(false);
 
-    if (success) {
-      navigate("/cart");
-    }
-  };
+  if (!success) {
+    navigate("/login");
+    return;
+  }
+
+  navigate("/cart");
+};
+
 
   return (
     <div className="product-page">

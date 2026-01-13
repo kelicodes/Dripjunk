@@ -1,0 +1,73 @@
+/* OrdersPage.css */
+
+/* Full viewport container */
+.orders-page-container {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  transition: background-color 0.3s, color 0.3s;
+  margin-top: 520px;
+}
+
+/* Page title */
+.orders-page-container h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+/* Message when no orders */
+.orders-page-container p {
+  color: var(--secondary-text);
+  font-size: 1rem;
+}
+
+/* Order card */
+.order-card {
+  width: 100%;
+  max-width: 700px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Order info */
+.order-card p {
+  margin: 0.3rem 0;
+  font-size: 1rem;
+}
+
+/* Highlight order status */
+.order-status {
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+}
+
+.order-status.pending {
+  background-color: #f59e0b; /* yellow */
+}
+
+.order-status.shipped {
+  background-color: #3b82f6; /* blue */
+}
+
+.order-status.delivered {
+  background-color: #10b981; /* green */
+}
+
+.order-status.cancelled {
+  background-color: #6b7280; /* gray */
+}

@@ -10,20 +10,25 @@ export const AuthProvider = ({ children }) => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [pendingAction, setPendingAction] = useState(null);
 
-  // 🔐 Fetch user once on app load
+  // 🔐 Fetch user on app load if token exists
   useEffect(() => {
     const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return setUser(null);
+
       try {
-        const res = await axios.get(
-          `${BASE_URL}/user/me`,
-          { withCredentials: true }
-        );
+        const res = await axios.get(`${BASE_URL}/user/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         if (res.data?.success) {
           setUser(res.data.user);
+        } else {
+          localStorage.removeItem("token");
+          setUser(null);
         }
       } catch {
-        // ❗ DO NOT close modal here
+        localStorage.removeItem("token");
         setUser(null);
       }
     };
@@ -31,22 +36,35 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+  // 🔔 Open auth modal and optionally store pending action
   const triggerAuthModal = (action = null) => {
     setPendingAction(() => action);
     setShowAuthModal(true);
   };
 
-  const handleLoginSuccess = async () => {
+  // ✅ Handle login/signup success
+  const handleLoginSuccess = async (token, userData) => {
+    if (token) localStorage.setItem("token", token); // store token
+    if (userData) setUser(userData); // update user in context
+
     if (pendingAction) {
-      await pendingAction();
+      await pendingAction(); // retry any pending action
       setPendingAction(null);
     }
-    setShowAuthModal(false); // ✅ close ONLY after success
+
+    setShowAuthModal(false); // close modal
   };
 
+  // ❌ Close modal manually without doing pending action
   const closeAuthModal = () => {
     setShowAuthModal(false);
     setPendingAction(null);
+  };
+
+  // ✅ Logout helper
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
   };
 
   return (
@@ -58,6 +76,9 @@ export const AuthProvider = ({ children }) => {
         triggerAuthModal,
         handleLoginSuccess,
         closeAuthModal,
+        pendingAction,
+        setPendingAction,
+        logout,
       }}
     >
       {children}

@@ -2,21 +2,28 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/Authcontex";
-import "./Logpage.css"; // you can keep your styles and tweak
+import "./Logpage.css";
 
 const BASE_URL = "https://dripg.onrender.com";
 
 const LoginPage = () => {
   const { setUser, handleLoginSuccess } = useContext(AuthContext);
-  const navigator=useNavigate("/")
+  const navigate = useNavigate();
 
   const [isLogin, setIsLogin] = useState(true);
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -28,19 +35,31 @@ const LoginPage = () => {
 
     try {
       const endpoint = isLogin ? "/user/login" : "/user/signup";
-      const res = await axios.post(`${BASE_URL}${endpoint}`, form, { withCredentials: true });
+      const res = await axios.post(`${BASE_URL}${endpoint}`, form);
 
-      if (res.data?.success && res.data.user) {
+      // ✅ TOKEN-BASED AUTH
+      if (res.data?.success && res.data?.token) {
+        // 1️⃣ Save token
+        localStorage.setItem("token", res.data.token);
+
+        // 2️⃣ Save user in context
         setUser(res.data.user);
-        navigator("/")
 
-        // 🔁 Retry pending actions like add-to-cart
-        if (handleLoginSuccess) await handleLoginSuccess();
+        // 3️⃣ Redirect
+        navigate("/");
+
+        // 4️⃣ Retry pending actions (e.g add to cart)
+        if (handleLoginSuccess) {
+          await handleLoginSuccess();
+        }
       } else {
         setError("Authentication failed");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid credentials. Please try again.");
+      setError(
+        err.response?.data?.message ||
+          "Invalid credentials. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -94,7 +113,7 @@ const LoginPage = () => {
             role="button"
             onClick={() => {
               setIsLogin(!isLogin);
-              setError(""); // clear previous errors
+              setError("");
             }}
           >
             {isLogin ? "Register" : "Login"}

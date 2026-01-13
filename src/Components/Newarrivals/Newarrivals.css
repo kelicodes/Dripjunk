@@ -18,39 +18,35 @@
   padding-left: 0.5rem;
 }
 
-/* Grid layout */
+/* Grid layout - guaranteed columns */
 .newarrivals-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 cards per row by default */
   gap: 1rem;
-  justify-content: center; /* center cards */
-}
-
-/* Responsive card sizing */
-.newarrivals-grid > * {
-  flex: 0 0 48%; /* 2 cards per row on mobile */
-  max-width: 48%;
+  justify-items: center; /* center cards inside their column */
 }
 
 @media (min-width: 600px) {
-  .newarrivals-grid > * {
-    flex: 0 0 31%; /* 3 cards per row on small tablets */
-    max-width: 31%;
+  .newarrivals-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
   }
 }
 
 @media (min-width: 900px) {
-  .newarrivals-grid > * {
-    flex: 0 0 23%; /* 4 cards per row on desktop */
-    max-width: 23%;
+  .newarrivals-grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
   }
 }
 
 @media (min-width: 1200px) {
-  .newarrivals-grid > * {
-    flex: 0 0 18%; /* 5 cards per row on large screens */
-    max-width: 18%;
+  .newarrivals-grid {
+    grid-template-columns: repeat(5, 1fr); /* 5 cards per row */
   }
+}
+
+/* Ensure cards take full column width */
+.newarrivals-grid > * {
+  width: 100%;
 }
 
 /* Dark mode support */

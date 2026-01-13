@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import Footer from "./Components/Footer/Footer.jsx";
+import Checkout from "./Pages/Cartcheckout/Cartcheckout.jsx";
 import Home from "./Pages/Home/Home.jsx";
 import SuperCollection from "./Pages/Supercollection/Supercollection.jsx";
 import ProductPage from "./Pages/Productpage/Productpage.jsx";
 import Cart from "./Pages/Cart/Cart.jsx";
 import LoginPage from "./Pages/Log/Logpage.jsx";
+import OrdersPage from "./Pages/Orders/Orders.jsx";
 import { AuthProvider } from "./Context/Authcontex.jsx";
 import "./App.css";
 
@@ -42,6 +44,8 @@ function App() {
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/checkout" element={<Checkout/>}/>
+          <Route path="/orders" element={<OrdersPage/>}/>
         </Routes>
       </div>
 
