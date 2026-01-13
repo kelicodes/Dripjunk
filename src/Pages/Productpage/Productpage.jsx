@@ -61,6 +61,10 @@ const ProductPage = () => {
   navigate("/cart");
 };
 
+useEffect(()=>{
+  window.scrollTo(0,0)
+},[])
+
 
   return (
     <div className="product-page">

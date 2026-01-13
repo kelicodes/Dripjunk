@@ -12,8 +12,8 @@ const Home=()=>{
     const {products}=useContext(ShopContext)
     return <>
     <Hero/>
-     <Collections/> 
-    <Newarrivals/>  
+     {/* <Collections/> 
+    <Newarrivals/>   */}
     </>
 }
 
